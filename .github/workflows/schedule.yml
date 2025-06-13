@@ -21,7 +21,7 @@ jobs:
         env:
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
-          curl -s "https://gist.githubusercontent.com/${{ github.actor }}/${GIST_ID}/raw" > gist.txt
+          curl -s "https://gist.githubusercontent.com/fortii2/${GIST_ID}/raw/Weekly%20development%20breakdown" > gist.txt
 
       - name: Replace section in README
         run: |

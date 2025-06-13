@@ -7,6 +7,7 @@ on:
 jobs:
   update-gist:
     runs-on: ubuntu-latest
+    environment: default
     steps:
       - uses: actions/checkout@master
       - name: Update gist

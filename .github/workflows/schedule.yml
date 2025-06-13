@@ -25,8 +25,8 @@ jobs:
 
       - name: Replace section in README
         run: |
-          START="<!--START_SECTION:GIST-->"
-          END="<!--END_SECTION:GIST-->"
+          START="<!--START_SECTION:wakatime-->"
+          END="<!--END_SECTION:wakatime-->"
           CONTENT=$(cat gist.txt)
           awk -v start="$START" -v end="$END" -v content="$CONTENT" '
             BEGIN {found=0}

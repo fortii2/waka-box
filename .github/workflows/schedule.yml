@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Debug secrets
-        run: |
-          echo "GIST_ID: ${{ secrets.GIST_ID }}"
-          echo "WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY | mask }}"
       - name: Update gist
         uses: matchai/waka-box@master
         env:

@@ -2,22 +2,22 @@ name: Update gist with WakaTime stats
 on:
   schedule:
     - cron: "0 0 * * *"
-  # Manual triggers with workflow_dispatch
   workflow_dispatch:
+
 jobs:
   update-gist:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
+
       - name: Update gist
         uses: matchai/waka-box@master
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-          
+
       - name: Fetch gist content
-        id: fetch_gist
         env:
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
@@ -25,15 +25,10 @@ jobs:
 
       - name: Replace section in README
         run: |
-          START="<!--START_SECTION:wakatime-->"
-          END="<!--END_SECTION:wakatime-->"
-          awk -v start="$START" -v end="$END" '
-            BEGIN {found=0}
-            $0~start {print; while((getline line < "gist.txt") > 0) print line; found=1; next}
-            found && $0~end {found=0}
-            !found
-          ' README.md > README.new
-          mv README.new README.md
+          sed -i '/<!--START_SECTION:wakatime-->/, /<!--END_SECTION:wakatime-->/ {
+            /<!--START_SECTION:wakatime-->/!{/<!--END_SECTION:wakatime-->/!d}
+          }' README.md
+          sed -i "/<!--START_SECTION:wakatime-->/r gist.txt" README.md
 
       - name: Commit and push if changed
         run: |
